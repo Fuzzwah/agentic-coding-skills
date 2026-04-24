@@ -8,6 +8,7 @@ REPO_REF="${AGENTIC_SKILLS_REF:-main}"
 BASE_URL="${AGENTIC_SKILLS_BASE_URL:-https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_REF}}"
 PROMPT_INPUT="${AGENTIC_SKILLS_PROMPT_INPUT:-/dev/tty}"
 PROMPT_OUTPUT="${AGENTIC_SKILLS_PROMPT_OUTPUT:-/dev/tty}"
+TEMP_FILES=()
 
 PLATFORMS=(claude copilot codex)
 SKILLS=(
@@ -64,6 +65,32 @@ add_unique() {
   target_array+=("${item}")
 }
 
+track_temp_file() {
+  TEMP_FILES+=("$1")
+}
+
+untrack_temp_file() {
+  local file_to_remove="$1"
+  local remaining_files=()
+  local current_file
+
+  for current_file in "${TEMP_FILES[@]:-}"; do
+    [[ "${current_file}" == "${file_to_remove}" ]] || remaining_files+=("${current_file}")
+  done
+
+  TEMP_FILES=("${remaining_files[@]}")
+}
+
+cleanup_temp_files() {
+  local temp_file
+
+  for temp_file in "${TEMP_FILES[@]:-}"; do
+    [[ -n "${temp_file}" && -e "${temp_file}" ]] && rm -f -- "${temp_file}"
+  done
+
+  return 0
+}
+
 detect_default_platforms() {
   DETECTED_PLATFORMS=()
 
@@ -77,7 +104,7 @@ detect_default_platforms() {
 platform_label() {
   case "$1" in
     claude) printf 'Claude Code (.claude → .claude/skills)' ;;
-    copilot) printf 'GitHub Copilot (.copilot/.github → .github/skills)' ;;
+    copilot) printf 'GitHub Copilot (detects .copilot or .github → installs to .github/skills)' ;;
     codex) printf 'OpenAI Codex (.codex → .codex/skills)' ;;
     *) return 1 ;;
   esac
@@ -275,15 +302,20 @@ install_skill() {
   destination_dir="${destination_root}/${skill}"
   url="${BASE_URL}/${skill}/SKILL.md"
   temp_file="$(mktemp "${TMPDIR:-/tmp}/agentic-skill.XXXXXX")"
+  track_temp_file "${temp_file}"
 
   mkdir -p "${destination_dir}"
 
   if ! download_file "${url}" "${temp_file}"; then
     rm -f "${temp_file}"
+    untrack_temp_file "${temp_file}"
     fail "failed to download ${skill} from ${url}"
   fi
 
+  [[ -s "${temp_file}" ]] || fail "downloaded ${skill} from ${url} was empty"
+
   mv "${temp_file}" "${destination_dir}/SKILL.md"
+  untrack_temp_file "${temp_file}"
   log "Installed ${skill} → ${destination_dir}/SKILL.md"
 }
 
@@ -309,5 +341,7 @@ main() {
   log ""
   log "Done."
 }
+
+trap cleanup_temp_files EXIT
 
 main "$@"
