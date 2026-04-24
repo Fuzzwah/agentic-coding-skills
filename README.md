@@ -31,6 +31,29 @@ These skills are intentionally:
 
 ## Using These Skills in an Agentic Development Environment
 
+### Install with the script (recommended)
+
+Run this from the root of the target repository:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Fuzzwah/agentic-coding-skills/main/install-skills.sh | bash
+```
+
+If you want to inspect the script first, download it, review it, then run it locally instead.
+
+The installer will:
+- detect existing `.claude`, `.copilot`, `.github`, and `.codex` markers in the current project
+- prompt you to confirm or change which platforms you want to install for
+- prompt you to install specific skills or **all**
+- install the selected skills into the native project paths:
+  - Claude Code: `.claude/skills/<skill>/SKILL.md`
+  - OpenAI Codex: `.codex/skills/<skill>/SKILL.md`
+  - GitHub Copilot: `.github/skills/<skill>/SKILL.md` (if `.copilot` is present, project installs are still normalized to `.github/skills`)
+
+### Manual installation
+
+If you prefer to copy files yourself instead of using the installer, use the manual flow below.
+
 The core pattern is the same no matter which tool, provider, or model you use:
 
 1. **Choose a skill** based on the job you want the agent to perform.
@@ -68,13 +91,11 @@ Context:
 Now perform the task using that skill.
 ```
 
----
-
-## Platform-Specific Examples
+### Platform-specific manual installation
 
 The wording below is intentionally concrete, but the same pattern works in any comparable tool.
 
-### Claude Code
+#### Claude Code
 
 Use when you want a terminal-based coding agent to inspect a repo, diff, or working tree directly.
 
@@ -99,7 +120,7 @@ Good fit:
 - reviewing unstaged or staged changes
 - checking whether implementation matches an issue or spec
 
-### OpenAI Codex
+#### OpenAI Codex
 
 Use when you want a coding agent to operate on a repository with explicit task instructions.
 
@@ -121,7 +142,7 @@ Good fit:
 - review of generated code from another agent
 - repo-aware critique with file-level findings
 
-### GitHub Copilot
+#### GitHub Copilot
 
 Per the official GitHub docs, agent skills work with **Copilot cloud agent**, **GitHub Copilot CLI**, and **agent mode in Visual Studio Code**.
 
@@ -162,8 +183,6 @@ Good fit:
 - When reviewing code, include the **issue**, **diff**, and **tests** whenever possible
 - When planning work, include the **requirements**, **constraints**, and **acceptance criteria**
 - If you switch models mid-workflow, **reload the skill** instead of assuming prior instructions carry over
-
----
 
 ## Usage Summary
 
