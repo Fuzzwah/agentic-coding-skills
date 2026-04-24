@@ -165,6 +165,25 @@ Good fit:
 
 ---
 
+## Interactive Installer
+
+If you want a guided project-local install, run this one-liner from the root of the target repository:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Fuzzwah/agentic-coding-skills/main/install-skills.sh | bash
+```
+
+The installer will:
+- detect existing `.claude`, `.copilot`, `.github`, and `.codex` markers in the current project
+- prompt you to confirm or change which platforms you want to install for
+- prompt you to install specific skills or **all**
+- install the selected skills into the native project paths:
+  - Claude Code: `.claude/skills/<skill>/SKILL.md`
+  - OpenAI Codex: `.codex/skills/<skill>/SKILL.md`
+  - GitHub Copilot: `.github/skills/<skill>/SKILL.md`
+
+---
+
 ## Usage Summary
 
 1. Open the `SKILL.md` file for the skill you want to use.
