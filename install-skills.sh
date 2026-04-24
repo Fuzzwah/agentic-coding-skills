@@ -154,7 +154,7 @@ parse_skills() {
 
 choose_platforms() {
   local response
-  local index=1
+  local index
   local marker
   local platform
   local detected
@@ -162,13 +162,13 @@ choose_platforms() {
   local copilot_status="no"
   local codex_status="no"
 
-  while true; do
-    [[ -d ".claude" ]] && claude_status="yes (.claude)"
-    if [[ -d ".copilot" || -d ".github" ]]; then
-      copilot_status="yes (.copilot/.github)"
-    fi
-    [[ -d ".codex" ]] && codex_status="yes (.codex)"
+  [[ -d ".claude" ]] && claude_status="yes (.claude)"
+  if [[ -d ".copilot" || -d ".github" ]]; then
+    copilot_status="yes (.copilot/.github)"
+  fi
+  [[ -d ".codex" ]] && codex_status="yes (.codex)"
 
+  while true; do
     log_tty ""
     log_tty "Install agentic-coding-skills into: ${PWD}"
     log_tty ""
@@ -213,7 +213,7 @@ choose_platforms() {
 
 choose_skills() {
   local response
-  local index=1
+  local index
   local skill
 
   while true; do
