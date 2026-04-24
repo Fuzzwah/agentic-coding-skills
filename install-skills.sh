@@ -160,15 +160,19 @@ choose_platforms() {
   local detected
   local claude_status="no"
   local copilot_status="no"
+  local copilot_marker=""
   local codex_status="no"
 
   [[ -d ".claude" ]] && claude_status="yes (.claude)"
-  if [[ -d ".copilot" && -d ".github" ]]; then
-    copilot_status="yes (.copilot and .github; installs to .github/skills)"
-  elif [[ -d ".github" ]]; then
-    copilot_status="yes (.github)"
-  elif [[ -d ".copilot" ]]; then
-    copilot_status="yes (.copilot detected; installs to .github/skills)"
+  if [[ -d ".copilot" || -d ".github" ]]; then
+    if [[ -d ".copilot" && -d ".github" ]]; then
+      copilot_marker=".copilot and .github"
+    elif [[ -d ".github" ]]; then
+      copilot_marker=".github"
+    else
+      copilot_marker=".copilot detected"
+    fi
+    copilot_status="yes (${copilot_marker}; installs to .github/skills)"
   fi
   [[ -d ".codex" ]] && codex_status="yes (.codex)"
 
@@ -270,7 +274,7 @@ install_skill() {
   destination_root="$(platform_destination "${platform}")"
   destination_dir="${destination_root}/${skill}"
   url="${BASE_URL}/${skill}/SKILL.md"
-  temp_file="$(mktemp)"
+  temp_file="$(mktemp "${TMPDIR:-/tmp}/agentic-skill.XXXXXX")"
 
   mkdir -p "${destination_dir}"
 
