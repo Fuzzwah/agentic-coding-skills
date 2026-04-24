@@ -27,7 +27,7 @@ The following skills are planned for future addition:
 | **dependency-audit** | Review newly added or updated dependencies for known vulnerabilities, unnecessary scope, license issues, and maintenance health. |
 | **performance-review** | Profile and critique code for latency, throughput, and resource usage bottlenecks. Includes common AI failure modes like N+1 queries and unnecessary re-computation. |
 | **documentation-writer** | Generate accurate, consistently styled documentation (README, API docs, inline comments) that matches the conventions of an existing codebase. |
-| **onboarding-guide** | Analyse a codebase and produce a structured guide for new developers: architecture overview, key entry points, data flow, gotchas, and local setup instructions. |
+| **onboarding-guide** | Analyze a codebase and produce a structured guide for new developers: architecture overview, key entry points, data flow, gotchas, and local setup instructions. |
 | **migration-assistant** | Plan and execute database or API migrations safely — generating rollback strategies, compatibility shims, and step-by-step execution plans. |
 | **incident-review** | Conduct a blameless post-mortem on a production incident: establish a timeline, identify contributing causes, and produce actionable follow-up items. |
 
