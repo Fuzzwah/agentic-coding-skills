@@ -170,7 +170,7 @@ choose_platforms() {
     elif [[ -d ".github" ]]; then
       copilot_marker=".github"
     else
-      copilot_marker=".copilot detected"
+      copilot_marker=".copilot"
     fi
     copilot_status="yes (${copilot_marker}; installs to .github/skills)"
   fi
