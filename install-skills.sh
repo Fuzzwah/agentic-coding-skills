@@ -95,7 +95,7 @@ detect_default_platforms() {
   DETECTED_PLATFORMS=()
 
   [[ -d ".claude" ]] && add_unique "claude" DETECTED_PLATFORMS
-  ([[ -d ".copilot" ]] || [[ -d ".github" ]]) && add_unique "copilot" DETECTED_PLATFORMS
+  [[ -d ".github" ]] && add_unique "copilot" DETECTED_PLATFORMS
   [[ -d ".codex" ]] && add_unique "codex" DETECTED_PLATFORMS
 
   return 0
@@ -104,7 +104,7 @@ detect_default_platforms() {
 platform_label() {
   case "$1" in
     claude) printf 'Claude Code (.claude → .claude/skills)' ;;
-    copilot) printf 'GitHub Copilot (detects .copilot or .github → installs to .github/skills)' ;;
+    copilot) printf 'GitHub Copilot (.github → installs to .github/skills)' ;;
     codex) printf 'OpenAI Codex (.codex → .codex/skills)' ;;
     *) return 1 ;;
   esac
@@ -191,16 +191,7 @@ choose_platforms() {
   local codex_status="no"
 
   [[ -d ".claude" ]] && claude_status="yes (.claude)"
-  if [[ -d ".copilot" || -d ".github" ]]; then
-    if [[ -d ".copilot" && -d ".github" ]]; then
-      copilot_marker=".copilot and .github"
-    elif [[ -d ".github" ]]; then
-      copilot_marker=".github"
-    else
-      copilot_marker=".copilot"
-    fi
-    copilot_status="yes (${copilot_marker}; installs to .github/skills)"
-  fi
+  [[ -d ".github" ]] && copilot_status="yes (.copilot)"
   [[ -d ".codex" ]] && codex_status="yes (.codex)"
 
   while true; do
