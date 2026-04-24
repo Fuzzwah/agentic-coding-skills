@@ -24,6 +24,7 @@ These skills are intentionally:
 | [onboarding-guide](./onboarding-guide/SKILL.md) | Analyze a codebase and produce a structured guide for new developers: architecture overview, key entry points, data flow, gotchas, and local setup instructions. |
 | [migration-assistant](./migration-assistant/SKILL.md) | Plan and execute database or API migrations safely — generating rollback strategies, compatibility shims, and step-by-step execution plans. |
 | [incident-review](./incident-review/SKILL.md) | Conduct a blameless post-mortem on a production incident: establish a timeline, identify contributing causes, and produce actionable follow-up items. |
+| [support-engineer](./support-engineer/SKILL.md) | Investigate user-reported issues, identify the underlying cause, recommend engineering fixes, and draft a clear response for the affected end user. |
 
 ---
 
