@@ -25,6 +25,7 @@ These skills are intentionally:
 | [migration-assistant](./migration-assistant/SKILL.md) | Plan and execute database or API migrations safely — generating rollback strategies, compatibility shims, and step-by-step execution plans. |
 | [incident-review](./incident-review/SKILL.md) | Conduct a blameless post-mortem on a production incident: establish a timeline, identify contributing causes, and produce actionable follow-up items. |
 | [support-engineer](./support-engineer/SKILL.md) | Investigate user-reported issues, identify the underlying cause, recommend engineering fixes, and draft a clear response for the affected end user. |
+| [create-agents-file](./create-agents-file/SKILL.md) | Create or refresh a repository-specific `AGENTS.md` file with accurate setup, workflow, testing, and stack-aware agent guidance. |
 
 ---
 
