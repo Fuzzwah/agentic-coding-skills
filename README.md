@@ -10,7 +10,7 @@ Skills are designed to work across models — primarily Claude (Opus/Sonnet) and
 
 | Skill | Description |
 |---|---|
-| [adversarial-review](./adversarial-review/SKILL.md) | Have a fresh AI model conduct a skeptical, adversarial review of code changes produced by another AI. Designed for GPT models reviewing Claude-authored PRs. |
+| [adversarial-review](./adversarial-review/SKILL.md) | Have a fresh AI model conduct a skeptical, adversarial review of PRs from any workflow, with explicit guidance for reviewing OpenSpec artifacts when they are part of the change. |
 
 ---
 
@@ -24,7 +24,7 @@ The following skills are planned for future addition:
 | **security-audit** | A focused security-only review that checks for injection, auth gaps, secrets exposure, insecure dependencies, and other OWASP-class vulnerabilities. |
 | **test-generation** | Drive an AI to generate comprehensive test suites — covering unit, integration, edge-case, and regression scenarios — rather than just happy-path tests. |
 | **refactoring-guide** | Systematically improve code quality without changing behavior: remove duplication, improve naming, simplify logic, and modernize patterns. |
-| **dependency-audit** | Review newly added or updated dependencies for known vulnerabilities, unnecessary scope, licence issues, and maintenance health. |
+| **dependency-audit** | Review newly added or updated dependencies for known vulnerabilities, unnecessary scope, license issues, and maintenance health. |
 | **performance-review** | Profile and critique code for latency, throughput, and resource usage bottlenecks. Includes common AI failure modes like N+1 queries and unnecessary re-computation. |
 | **documentation-writer** | Generate accurate, consistently styled documentation (README, API docs, inline comments) that matches the conventions of an existing codebase. |
 | **onboarding-guide** | Analyse a codebase and produce a structured guide for new developers: architecture overview, key entry points, data flow, gotchas, and local setup instructions. |
