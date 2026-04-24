@@ -196,7 +196,7 @@ choose_platforms() {
   local opencode_status="no"
 
   [[ -d ".claude" ]] && claude_status="yes (.claude)"
-  [[ -d ".github" ]] && copilot_status="yes (.copilot)"
+  [[ -d ".github" ]] && copilot_status="yes (.github)"
   [[ -d ".codex" ]] && codex_status="yes (.codex)"
   [[ -d ".opencode" ]] && opencode_status="yes (.opencode)"
 
