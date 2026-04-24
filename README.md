@@ -42,13 +42,14 @@ curl -fsSL https://raw.githubusercontent.com/Fuzzwah/agentic-coding-skills/main/
 If you want to inspect the script first, download it, review it, then run it locally instead.
 
 The installer will:
-- detect existing `.claude`, `.github`, and `.codex` markers in the current project
+- detect existing `.claude`, `.github`, `.codex`, and `.opencode` markers in the current project
 - prompt you to confirm or change which platforms you want to install for
 - prompt you to install specific skills or **all**
 - install the selected skills into the native project paths:
   - Claude Code: `.claude/skills/<skill>/SKILL.md`
   - OpenAI Codex: `.codex/skills/<skill>/SKILL.md`
   - GitHub Copilot: `.github/skills/<skill>/SKILL.md`
+  - OpenCode: `.agents/skills/<skill>/SKILL.md`
 
 ### Manual installation
 
@@ -173,6 +174,31 @@ Good fit:
 - personal skill libraries shared across repositories
 - repeatable workflows in Copilot CLI or VS Code agent mode
 
+#### OpenCode
+
+Use when you want [opencode](https://opencode.ai) to discover skills from your project or your home directory.
+
+OpenCode scans for skills in `.claude/` and `.agents/` directories, using `skills/**/SKILL.md` as the discovery pattern. The `.agents/skills/` path is the recommended destination to avoid overlap with Claude Code's `.claude/skills/`.
+
+Example flow:
+
+1. Create `.agents/skills/adversarial-review/` in your repo (or in `~/.agents/skills/` for a global install).
+2. Copy this repo's `adversarial-review/SKILL.md` to `.agents/skills/adversarial-review/SKILL.md`.
+3. Start a fresh opencode session in the repository.
+4. Invoke the skill in your task prompt:
+
+```text
+Use the adversarial-review skill.
+Review the current branch against the main branch.
+Focus on correctness, security, test quality, and scope creep.
+```
+
+Note: opencode discovers skills from both `.claude/skills/` and `.agents/skills/` within the project tree, so skills installed for Claude Code are also available to opencode automatically.
+
+Good fit:
+- terminal-based coding sessions with opencode
+- sharing skills across both Claude Code and opencode in the same project
+
 ---
 
 ## Practical Tips
@@ -187,7 +213,7 @@ Good fit:
 ## Usage Summary
 
 1. Open the `SKILL.md` file for the skill you want to use.
-2. Copy the skill folder into your target tool's native skills directory (for example, `.github/skills/...`, `~/.copilot/skills/...`, `.claude/skills/...`, or `.codex/skills/...`).
+2. Copy the skill folder into your target tool's native skills directory (for example, `.github/skills/...`, `~/.copilot/skills/...`, `.claude/skills/...`, `.codex/skills/...`, or `.agents/skills/...`).
 3. Start a fresh session for your repository.
 4. Provide the relevant context and ask the agent to execute the task with that skill.
 

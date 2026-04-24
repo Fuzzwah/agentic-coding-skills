@@ -10,7 +10,7 @@ PROMPT_INPUT="${AGENTIC_SKILLS_PROMPT_INPUT:-/dev/tty}"
 PROMPT_OUTPUT="${AGENTIC_SKILLS_PROMPT_OUTPUT:-/dev/tty}"
 TEMP_FILES=()
 
-PLATFORMS=(claude copilot codex)
+PLATFORMS=(claude copilot codex opencode)
 SKILLS=(
   adversarial-review
   architecture-planning
@@ -97,6 +97,7 @@ detect_default_platforms() {
   [[ -d ".claude" ]] && add_unique "claude" DETECTED_PLATFORMS
   [[ -d ".github" ]] && add_unique "copilot" DETECTED_PLATFORMS
   [[ -d ".codex" ]] && add_unique "codex" DETECTED_PLATFORMS
+  [[ -d ".opencode" ]] && add_unique "opencode" DETECTED_PLATFORMS
 
   return 0
 }
@@ -106,6 +107,7 @@ platform_label() {
     claude) printf 'Claude Code (.claude → .claude/skills)' ;;
     copilot) printf 'GitHub Copilot (.github → installs to .github/skills)' ;;
     codex) printf 'OpenAI Codex (.codex → .codex/skills)' ;;
+    opencode) printf 'OpenCode (.opencode → .agents/skills)' ;;
     *) return 1 ;;
   esac
 }
@@ -115,6 +117,7 @@ platform_destination() {
     claude) printf '.claude/skills' ;;
     copilot) printf '.github/skills' ;;
     codex) printf '.codex/skills' ;;
+    opencode) printf '.agents/skills' ;;
     *) return 1 ;;
   esac
 }
@@ -131,6 +134,7 @@ parse_platforms() {
       1|claude) add_unique "claude" PARSED_PLATFORMS ;;
       2|copilot|github) add_unique "copilot" PARSED_PLATFORMS ;;
       3|codex) add_unique "codex" PARSED_PLATFORMS ;;
+      4|opencode) add_unique "opencode" PARSED_PLATFORMS ;;
       all)
         PARSED_PLATFORMS=("${PLATFORMS[@]}")
         return 0
@@ -189,10 +193,12 @@ choose_platforms() {
   local copilot_status="no"
   local copilot_marker=""
   local codex_status="no"
+  local opencode_status="no"
 
   [[ -d ".claude" ]] && claude_status="yes (.claude)"
   [[ -d ".github" ]] && copilot_status="yes (.copilot)"
   [[ -d ".codex" ]] && codex_status="yes (.codex)"
+  [[ -d ".opencode" ]] && opencode_status="yes (.opencode)"
 
   while true; do
     log_tty ""
@@ -202,6 +208,7 @@ choose_platforms() {
     log_tty "  - Claude: ${claude_status}"
     log_tty "  - Copilot: ${copilot_status}"
     log_tty "  - Codex: ${codex_status}"
+    log_tty "  - OpenCode: ${opencode_status}"
     log_tty ""
     log_tty "Choose platforms to install for:"
 
@@ -233,7 +240,7 @@ choose_platforms() {
       return 0
     fi
 
-    log_tty "Invalid selection. Please choose 1-3, platform names, or 'all'."
+    log_tty "Invalid selection. Please choose 1-4, platform names, or 'all'."
   done
 }
 
