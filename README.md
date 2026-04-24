@@ -41,10 +41,10 @@ The following skills are planned for future addition:
 The core pattern is the same no matter which tool, provider, or model you use:
 
 1. **Choose a skill** based on the job you want the agent to perform.
-2. **Load the skill instructions** by pasting the `SKILL.md` contents into the agent's system prompt, custom instructions, or first message.
-3. **Provide working context** such as a task description, issue, diff, file set, repository path, design doc, or PR link.
-4. **Tell the agent what to do next** such as review, plan, implement, critique, or summarize.
-5. **Keep the skill in the loop** by reminding the agent to keep following the loaded skill if the session becomes long or changes direction.
+2. **Place the skill in the tool's native skills directory** so the agent can discover it natively.
+3. **Start a fresh session** in the target repository.
+4. **Provide working context** such as a task description, issue, diff, file set, repository path, design doc, or PR link.
+5. **Tell the agent what to do next** such as review, plan, implement, critique, or summarize.
 
 ### What makes a skill work well
 
@@ -58,23 +58,21 @@ Skills are most effective when you:
 
 Use this general structure in any agentic environment:
 
-1. Load the skill text
+1. Reference the installed skill by name
 2. Add task-specific context
 3. Give a direct instruction
 
 Example:
 
 ```text
-Use the attached skill as your operating instructions for this session.
-
-[paste SKILL.md contents here]
+Use the adversarial-review skill for this session.
 
 Context:
 - Repository: <repo or local path>
 - Task: <what changed or needs to be done>
 - Artifacts: <diff, PR, issue, design doc, logs, etc.>
 
-Now perform the task using the skill.
+Now perform the task using that skill.
 ```
 
 ---
@@ -89,16 +87,19 @@ Use when you want a terminal-based coding agent to inspect a repo, diff, or work
 
 Example flow:
 
-1. Open `adversarial-review/SKILL.md`
-2. Start a new Claude Code session in your repository
-3. Paste the skill contents as the first instruction
-4. Follow with a task like:
+1. Create `.claude/skills/adversarial-review/` in your repo (or in `~/.claude/skills/` for a global install).
+2. Copy this repo's `adversarial-review/SKILL.md` to `.claude/skills/adversarial-review/SKILL.md`.
+3. Start a new Claude Code session in your repository.
+4. Invoke the skill in your task prompt:
 
 ```text
-Review the current branch using this skill.
+Use the adversarial-review skill.
+Review the current branch.
 Compare the working tree against the main branch.
 Focus on correctness, security, test quality, and scope creep.
 ```
+
+Note: Claude skill discovery is based on `.claude/skills` paths; a shared `.agents` directory is not discovered automatically.
 
 Good fit:
 - reviewing a local branch before opening a PR
@@ -111,12 +112,13 @@ Use when you want a coding agent to operate on a repository with explicit task i
 
 Example flow:
 
-1. Start a fresh Codex session for the repository
-2. Paste the contents of `SKILL.md`
-3. Add the repo-specific task:
+1. Create `.codex/skills/adversarial-review/` in your repo (or in `~/.codex/skills/` for a global install).
+2. Copy this repo's `adversarial-review/SKILL.md` to `.codex/skills/adversarial-review/SKILL.md`.
+3. Start a fresh Codex session for the repository.
+4. Invoke the skill with your repo-specific task:
 
 ```text
-Apply this skill to review the changes for the current task.
+Use the adversarial-review skill to review the changes for the current task.
 Inspect the modified files, identify defects and risky assumptions, and give a verdict.
 Use the issue description and local diff as the source of truth.
 ```
@@ -186,8 +188,8 @@ Good fit:
 ## Usage Summary
 
 1. Open the `SKILL.md` file for the skill you want to use.
-2. Paste its contents into your agent's system prompt, custom instructions, or first message.
-3. Provide the relevant context as the next message or attached artifacts.
-4. Ask the agent to perform the task while following the loaded skill.
+2. Copy it into your target tool's native skills directory (for example, `.claude/skills/...` or `.codex/skills/...`).
+3. Start a fresh session for your repository.
+4. Provide the relevant context and ask the agent to execute the task with that skill.
 
-Skills are intentionally standalone — no framework, SDK, or provider-specific integration is required.
+Skills are intentionally standalone and portable across tools, but each provider has its own discovery path conventions.
