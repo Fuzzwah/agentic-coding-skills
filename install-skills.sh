@@ -163,8 +163,12 @@ choose_platforms() {
   local codex_status="no"
 
   [[ -d ".claude" ]] && claude_status="yes (.claude)"
-  if [[ -d ".copilot" || -d ".github" ]]; then
-    copilot_status="yes (.copilot/.github)"
+  if [[ -d ".copilot" && -d ".github" ]]; then
+    copilot_status="yes (.copilot and .github; installs to .github/skills)"
+  elif [[ -d ".github" ]]; then
+    copilot_status="yes (.github)"
+  elif [[ -d ".copilot" ]]; then
+    copilot_status="yes (.copilot detected; installs to .github/skills)"
   fi
   [[ -d ".codex" ]] && codex_status="yes (.codex)"
 
