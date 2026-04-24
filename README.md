@@ -120,49 +120,36 @@ Good fit:
 - review of generated code from another agent
 - repo-aware critique with file-level findings
 
-### GitHub Copilot CLI
+### GitHub Copilot
 
-Use when you want to drive an agentic workflow from the terminal and provide diffs or files directly.
+Per the official GitHub docs, agent skills work with **Copilot cloud agent**, **GitHub Copilot CLI**, and **agent mode in Visual Studio Code**.
 
-Example flow:
-
-1. Open the skill file locally
-2. Start a new Copilot CLI chat or agent session
-3. Paste the skill contents
-4. Provide a concrete instruction, for example:
-
-```text
-Use this skill to review the output of the last implementation step.
-Look at the current git diff and the files that changed.
-Report critical issues, significant concerns, minor issues, questions, and a final verdict.
-```
-
-Good fit:
-- quick local review loops
-- validating agent-generated edits before commit
-- applying a repeatable review role in shell-driven workflows
-
-### GitHub Copilot Web UI
-
-Use when you want to review a PR, issue, design note, or pasted diff in the browser.
+Use when you want GitHub Copilot to discover these skills natively instead of pasting the `SKILL.md` contents into chat.
 
 Example flow:
 
-1. Open a new chat in GitHub Copilot
-2. Paste the `SKILL.md` contents into the first message
-3. Attach or paste the relevant PR description, diff, issue text, or spec excerpts
-4. Ask Copilot to perform the task, for example:
+1. Choose whether you want a **project skill** or a **personal skill**:
+   - Project skill for this repo only: create `.github/skills/adversarial-review/` in the repository
+   - Personal skill across repos: create `~/.copilot/skills/adversarial-review/`
+2. Copy this repo's entire `adversarial-review/` directory into that location so the installed folder contains `SKILL.md`.
+3. Keep the skill folder name lowercase and hyphenated, and keep the file name exactly `SKILL.md`.
+4. Start a fresh Copilot session in the repository using Copilot cloud agent, GitHub Copilot CLI, or VS Code agent mode.
+5. Give Copilot a task that matches the skill, plus the relevant context. You can mention the skill explicitly if you want, but Copilot can also choose it automatically from the skill description.
+
+Example prompt:
 
 ```text
-Use this skill to review this pull request.
-Check whether the implementation matches the PR description and whether there are correctness, security, or testing gaps.
-If the PR references planning artifacts, review those too.
+Use the adversarial-review skill for this task.
+Review the current branch against the main branch.
+Focus on correctness, security, test quality, and scope creep.
 ```
 
+If you want to install skills with GitHub CLI instead of copying folders manually, GitHub's official docs also support `gh skill install`, `gh skill preview`, and `gh skill update`.
+
 Good fit:
-- PR review in GitHub
-- reviewing issues, specs, and design artifacts without local checkout
-- sharing a reusable review workflow with a team
+- repo-scoped skills in Copilot cloud agent
+- personal skill libraries shared across repositories
+- repeatable workflows in Copilot CLI or VS Code agent mode
 
 ---
 
@@ -170,7 +157,7 @@ Good fit:
 
 - Prefer **new sessions** over continuing an unrelated conversation
 - If the tool supports it, put the skill in a **system prompt**, **custom instruction**, or **chat preamble**
-- If the tool does not support system prompts, put the skill in the **first user message**
+- In GitHub Copilot, prefer installing the skill in `.github/skills` or `~/.copilot/skills` instead of pasting the file into chat
 - When reviewing code, include the **issue**, **diff**, and **tests** whenever possible
 - When planning work, include the **requirements**, **constraints**, and **acceptance criteria**
 - If you switch models mid-workflow, **reload the skill** instead of assuming prior instructions carry over
@@ -180,7 +167,7 @@ Good fit:
 ## Usage Summary
 
 1. Open the `SKILL.md` file for the skill you want to use.
-2. Copy it into your target tool's native skills directory (for example, `.claude/skills/...` or `.codex/skills/...`).
+2. Copy the skill folder into your target tool's native skills directory (for example, `.github/skills/...`, `~/.copilot/skills/...`, `.claude/skills/...`, or `.codex/skills/...`).
 3. Start a fresh session for your repository.
 4. Provide the relevant context and ask the agent to execute the task with that skill.
 
