@@ -13,6 +13,7 @@ TEMP_FILES=()
 PLATFORMS=(claude copilot codex opencode)
 SKILLS=(
   adversarial-review
+  code-review
   architecture-planning
   create-agents-file
   dependency-audit
@@ -158,18 +159,19 @@ parse_skills() {
   for token in ${normalized}; do
     case "${token}" in
       1|adversarial-review) add_unique "adversarial-review" PARSED_SKILLS ;;
-      2|architecture-planning) add_unique "architecture-planning" PARSED_SKILLS ;;
-      3|create-agents-file) add_unique "create-agents-file" PARSED_SKILLS ;;
-      4|dependency-audit) add_unique "dependency-audit" PARSED_SKILLS ;;
-      5|documentation-writer) add_unique "documentation-writer" PARSED_SKILLS ;;
-      6|incident-review) add_unique "incident-review" PARSED_SKILLS ;;
-      7|migration-assistant) add_unique "migration-assistant" PARSED_SKILLS ;;
-      8|onboarding-guide) add_unique "onboarding-guide" PARSED_SKILLS ;;
-      9|performance-review) add_unique "performance-review" PARSED_SKILLS ;;
-      10|refactoring-guide) add_unique "refactoring-guide" PARSED_SKILLS ;;
-      11|security-audit) add_unique "security-audit" PARSED_SKILLS ;;
-      12|support-engineer) add_unique "support-engineer" PARSED_SKILLS ;;
-      13|test-generation) add_unique "test-generation" PARSED_SKILLS ;;
+      2|code-review) add_unique "code-review" PARSED_SKILLS ;;
+      3|architecture-planning) add_unique "architecture-planning" PARSED_SKILLS ;;
+      4|create-agents-file) add_unique "create-agents-file" PARSED_SKILLS ;;
+      5|dependency-audit) add_unique "dependency-audit" PARSED_SKILLS ;;
+      6|documentation-writer) add_unique "documentation-writer" PARSED_SKILLS ;;
+      7|incident-review) add_unique "incident-review" PARSED_SKILLS ;;
+      8|migration-assistant) add_unique "migration-assistant" PARSED_SKILLS ;;
+      9|onboarding-guide) add_unique "onboarding-guide" PARSED_SKILLS ;;
+      10|performance-review) add_unique "performance-review" PARSED_SKILLS ;;
+      11|refactoring-guide) add_unique "refactoring-guide" PARSED_SKILLS ;;
+      12|security-audit) add_unique "security-audit" PARSED_SKILLS ;;
+      13|support-engineer) add_unique "support-engineer" PARSED_SKILLS ;;
+      14|test-generation) add_unique "test-generation" PARSED_SKILLS ;;
       all)
         PARSED_SKILLS=("${SKILLS[@]}")
         return 0
