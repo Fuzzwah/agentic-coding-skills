@@ -14,6 +14,7 @@ These skills are intentionally:
 | Skill | Description |
 |---|---|
 | [adversarial-review](./adversarial-review/SKILL.md) | Have a fresh AI model conduct a skeptical, adversarial review of PRs from any workflow, with explicit guidance for reviewing OpenSpec artifacts when they are part of the change. |
+| [code-review](./code-review/SKILL.md) | Perform a context-first two-phase code review that establishes product intent and architecture before auditing technical debt, performance, security, and scalability. |
 | [architecture-planning](./architecture-planning/SKILL.md) | Guide an AI through structured technical planning before any code is written — producing a clear spec, decision log, and implementation checklist for a strong implementation model to follow. |
 | [security-audit](./security-audit/SKILL.md) | A focused security-only review that checks for injection, auth gaps, secrets exposure, insecure dependencies, and other OWASP-class vulnerabilities. |
 | [test-generation](./test-generation/SKILL.md) | Drive an AI to generate comprehensive test suites — covering unit, integration, edge-case, and regression scenarios — rather than just happy-path tests. |
