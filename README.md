@@ -1,11 +1,22 @@
 # agentic-coding-skills
 
-A collection of `SKILL.md` files for use with agentic coding systems. Each skill is a standalone instruction file you can load into an AI-assisted development workflow to give the model a specific role with a clear operating procedure.
+A collection of reusable agent artifacts for use with agentic coding systems. Today the repository ships `SKILL.md` files; the layout also now reserves space for Claude command files and Pi prompt files alongside skills.
 
-These skills are intentionally:
+The skills in this repo are intentionally:
 - **Platform agnostic**: usable in local CLIs, editor agents, web chat UIs, or automation pipelines
 - **Provider agnostic**: usable with Anthropic, OpenAI, GitHub-hosted models, or other capable LLMs
 - **Model agnostic**: best with strong reasoning models, but not tied to a single model family
+
+---
+
+## Repository Layout
+
+- `skills/`: reusable skill folders, each containing a `SKILL.md`
+- `claude-commands/`: reserved for Claude command files
+- `pi-prompts/`: reserved for Pi prompt files
+- `install-skills.sh`: interactive installer for the skill library
+
+This keeps each artifact type in its own top-level directory so the repo can grow beyond skills without mixing incompatible file conventions in the root.
 
 ---
 
@@ -13,20 +24,20 @@ These skills are intentionally:
 
 | Skill | Description |
 |---|---|
-| [adversarial-review](./adversarial-review/SKILL.md) | Have a fresh AI model conduct a skeptical, adversarial review of PRs from any workflow, with explicit guidance for reviewing OpenSpec artifacts when they are part of the change. |
-| [code-review](./code-review/SKILL.md) | Perform a context-first two-phase code review that establishes product intent and architecture before auditing technical debt, performance, security, and scalability. |
-| [architecture-planning](./architecture-planning/SKILL.md) | Guide an AI through structured technical planning before any code is written — producing a clear spec, decision log, and implementation checklist for a strong implementation model to follow. |
-| [security-audit](./security-audit/SKILL.md) | A focused security-only review that checks for injection, auth gaps, secrets exposure, insecure dependencies, and other OWASP-class vulnerabilities. |
-| [test-generation](./test-generation/SKILL.md) | Drive an AI to generate comprehensive test suites — covering unit, integration, edge-case, and regression scenarios — rather than just happy-path tests. |
-| [refactoring-guide](./refactoring-guide/SKILL.md) | Systematically improve code quality without changing behavior: remove duplication, improve naming, simplify logic, and modernize patterns. |
-| [dependency-audit](./dependency-audit/SKILL.md) | Review newly added or updated dependencies for known vulnerabilities, unnecessary scope, license issues, and maintenance health. |
-| [performance-review](./performance-review/SKILL.md) | Profile and critique code for latency, throughput, and resource usage bottlenecks. Includes common AI failure modes like N+1 queries and unnecessary re-computation. |
-| [documentation-writer](./documentation-writer/SKILL.md) | Generate accurate, consistently styled documentation (README, API docs, inline comments) that matches the conventions of an existing codebase. |
-| [onboarding-guide](./onboarding-guide/SKILL.md) | Analyze a codebase and produce a structured guide for new developers: architecture overview, key entry points, data flow, gotchas, and local setup instructions. |
-| [migration-assistant](./migration-assistant/SKILL.md) | Plan and execute database or API migrations safely — generating rollback strategies, compatibility shims, and step-by-step execution plans. |
-| [incident-review](./incident-review/SKILL.md) | Conduct a blameless post-mortem on a production incident: establish a timeline, identify contributing causes, and produce actionable follow-up items. |
-| [support-engineer](./support-engineer/SKILL.md) | Investigate user-reported issues, identify the underlying cause, recommend engineering fixes, and draft a clear response for the affected end user. |
-| [create-agents-file](./create-agents-file/SKILL.md) | Create or refresh a repository-specific `AGENTS.md` file with accurate setup, workflow, testing, and stack-aware agent guidance. |
+| [adversarial-review](./skills/adversarial-review/SKILL.md) | Have a fresh AI model conduct a skeptical, adversarial review of PRs from any workflow, with explicit guidance for reviewing OpenSpec artifacts when they are part of the change. |
+| [code-review](./skills/code-review/SKILL.md) | Perform a context-first two-phase code review that establishes product intent and architecture before auditing technical debt, performance, security, and scalability. |
+| [architecture-planning](./skills/architecture-planning/SKILL.md) | Guide an AI through structured technical planning before any code is written — producing a clear spec, decision log, and implementation checklist for a strong implementation model to follow. |
+| [security-audit](./skills/security-audit/SKILL.md) | A focused security-only review that checks for injection, auth gaps, secrets exposure, insecure dependencies, and other OWASP-class vulnerabilities. |
+| [test-generation](./skills/test-generation/SKILL.md) | Drive an AI to generate comprehensive test suites — covering unit, integration, edge-case, and regression scenarios — rather than just happy-path tests. |
+| [refactoring-guide](./skills/refactoring-guide/SKILL.md) | Systematically improve code quality without changing behavior: remove duplication, improve naming, simplify logic, and modernize patterns. |
+| [dependency-audit](./skills/dependency-audit/SKILL.md) | Review newly added or updated dependencies for known vulnerabilities, unnecessary scope, license issues, and maintenance health. |
+| [performance-review](./skills/performance-review/SKILL.md) | Profile and critique code for latency, throughput, and resource usage bottlenecks. Includes common AI failure modes like N+1 queries and unnecessary re-computation. |
+| [documentation-writer](./skills/documentation-writer/SKILL.md) | Generate accurate, consistently styled documentation (README, API docs, inline comments) that matches the conventions of an existing codebase. |
+| [onboarding-guide](./skills/onboarding-guide/SKILL.md) | Analyze a codebase and produce a structured guide for new developers: architecture overview, key entry points, data flow, gotchas, and local setup instructions. |
+| [migration-assistant](./skills/migration-assistant/SKILL.md) | Plan and execute database or API migrations safely — generating rollback strategies, compatibility shims, and step-by-step execution plans. |
+| [incident-review](./skills/incident-review/SKILL.md) | Conduct a blameless post-mortem on a production incident: establish a timeline, identify contributing causes, and produce actionable follow-up items. |
+| [support-engineer](./skills/support-engineer/SKILL.md) | Investigate user-reported issues, identify the underlying cause, recommend engineering fixes, and draft a clear response for the affected end user. |
+| [create-agents-file](./skills/create-agents-file/SKILL.md) | Create or refresh a repository-specific `AGENTS.md` file with accurate setup, workflow, testing, and stack-aware agent guidance. |
 
 ---
 
@@ -104,7 +115,7 @@ Use when you want a terminal-based coding agent to inspect a repo, diff, or work
 Example flow:
 
 1. Create `.claude/skills/adversarial-review/` in your repo (or in `~/.claude/skills/` for a global install).
-2. Copy this repo's `adversarial-review/SKILL.md` to `.claude/skills/adversarial-review/SKILL.md`.
+2. Copy this repo's `skills/adversarial-review/SKILL.md` to `.claude/skills/adversarial-review/SKILL.md`.
 3. Start a new Claude Code session in your repository.
 4. Invoke the skill in your task prompt:
 
@@ -129,7 +140,7 @@ Use when you want a coding agent to operate on a repository with explicit task i
 Example flow:
 
 1. Create `.codex/skills/adversarial-review/` in your repo (or in `~/.codex/skills/` for a global install).
-2. Copy this repo's `adversarial-review/SKILL.md` to `.codex/skills/adversarial-review/SKILL.md`.
+2. Copy this repo's `skills/adversarial-review/SKILL.md` to `.codex/skills/adversarial-review/SKILL.md`.
 3. Start a fresh Codex session for the repository.
 4. Invoke the skill with your repo-specific task:
 
@@ -155,7 +166,7 @@ Example flow:
 1. Choose whether you want a **project skill** or a **personal skill**:
    - Project skill for this repo only: create `.github/skills/adversarial-review/` in the repository
    - Personal skill across repos: create `~/.copilot/skills/adversarial-review/`
-2. Copy this repo's entire `adversarial-review/` directory into that location so the installed folder contains `SKILL.md`.
+2. Copy this repo's entire `skills/adversarial-review/` directory into that location so the installed folder contains `SKILL.md`.
 3. Keep the skill folder name lowercase and hyphenated, and keep the file name exactly `SKILL.md`.
 4. Start a fresh Copilot session in the repository using Copilot cloud agent, GitHub Copilot CLI, or VS Code agent mode.
 5. Give Copilot a task that matches the skill, plus the relevant context. You can mention the skill explicitly if you want, but Copilot can also choose it automatically from the skill description.
@@ -184,7 +195,7 @@ OpenCode scans for skills in `.claude/` and `.agents/` directories, using `skill
 Example flow:
 
 1. Create `.agents/skills/adversarial-review/` in your repo (or in `~/.agents/skills/` for a global install).
-2. Copy this repo's `adversarial-review/SKILL.md` to `.agents/skills/adversarial-review/SKILL.md`.
+2. Copy this repo's `skills/adversarial-review/SKILL.md` to `.agents/skills/adversarial-review/SKILL.md`.
 3. Start a fresh opencode session in the repository.
 4. Invoke the skill in your task prompt:
 
