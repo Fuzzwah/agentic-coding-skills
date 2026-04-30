@@ -1,6 +1,6 @@
 # agentic-coding-skills
 
-A collection of reusable agent artifacts for use with agentic coding systems. Today the repository ships `SKILL.md` files; the layout also now reserves space for Claude command files and Pi prompt files alongside skills.
+A collection of reusable agent artifacts for use with agentic coding systems. The repository ships reusable `SKILL.md` files plus Claude command markdown files, with room for Pi prompt files alongside them.
 
 The skills in this repo are intentionally:
 - **Platform agnostic**: usable in local CLIs, editor agents, web chat UIs, or automation pipelines
@@ -12,7 +12,7 @@ The skills in this repo are intentionally:
 ## Repository Layout
 
 - `skills/`: reusable skill folders, each containing a `SKILL.md`
-- `claude-commands/`: reserved for Claude command files
+- `claude-commands/`: Claude command files
 - `pi-prompts/`: reserved for Pi prompt files
 - `install-skills.sh`: interactive installer for the skill library
 
@@ -41,6 +41,14 @@ This keeps each artifact type in its own top-level directory so the repo can gro
 
 ---
 
+## Available Claude Commands
+
+| Command | Description |
+|---|---|
+| [`/shipit`](./claude-commands/shipit.md) | Finalize the current branch with an OpenSpec-aware release flow: block on unfinished `tasks.md` items unless the user opts to continue, otherwise sync and archive completed OpenSpec changes before commit, PR, checks, and merge confirmation. |
+
+---
+
 ## Using These Skills in an Agentic Development Environment
 
 ### Install with the script (recommended)
@@ -62,6 +70,8 @@ The installer will:
   - OpenAI Codex: `.codex/skills/<skill>/SKILL.md`
   - GitHub Copilot: `.github/skills/<skill>/SKILL.md`
   - OpenCode: `.agents/skills/<skill>/SKILL.md`
+
+Note: the installer currently installs skills only. Claude command files from `claude-commands/` should be copied manually into `.claude/commands/` (project-local) or `~/.claude/commands/` (personal).
 
 ### Manual installation
 
@@ -110,7 +120,7 @@ The wording below is intentionally concrete, but the same pattern works in any c
 
 #### Claude Code
 
-Use when you want a terminal-based coding agent to inspect a repo, diff, or working tree directly.
+Use when you want a terminal-based coding agent to inspect a repo, diff, or working tree directly. Claude Code can discover both reusable skills and slash commands.
 
 Example flow:
 
@@ -127,6 +137,8 @@ Focus on correctness, security, test quality, and scope creep.
 ```
 
 Note: Claude skill discovery is based on `.claude/skills` paths; a shared `.agents` directory is not discovered automatically.
+
+For Claude slash commands, copy files from `claude-commands/` into `.claude/commands/` (repo-local) or `~/.claude/commands/` (global). For example, install `claude-commands/shipit.md` as `.claude/commands/shipit.md`, then invoke it with `/shipit`.
 
 Good fit:
 - reviewing a local branch before opening a PR
