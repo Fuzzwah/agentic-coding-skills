@@ -6,6 +6,7 @@ REPO_OWNER="Fuzzwah"
 REPO_NAME="agentic-coding-skills"
 REPO_REF="${AGENTIC_SKILLS_REF:-main}"
 BASE_URL="${AGENTIC_SKILLS_BASE_URL:-https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_REF}}"
+SKILLS_SOURCE_DIR="${AGENTIC_SKILLS_SOURCE_DIR:-skills}"
 PROMPT_INPUT="${AGENTIC_SKILLS_PROMPT_INPUT:-/dev/tty}"
 PROMPT_OUTPUT="${AGENTIC_SKILLS_PROMPT_OUTPUT:-/dev/tty}"
 TEMP_FILES=()
@@ -300,7 +301,7 @@ install_skill() {
 
   destination_root="$(platform_destination "${platform}")"
   destination_dir="${destination_root}/${skill}"
-  url="${BASE_URL}/${skill}/SKILL.md"
+  url="${BASE_URL}/${SKILLS_SOURCE_DIR}/${skill}/SKILL.md"
   temp_file="$(mktemp "${TMPDIR:-/tmp}/agentic-skill.XXXXXX")"
   track_temp_file "${temp_file}"
 
