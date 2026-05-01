@@ -45,7 +45,7 @@ This keeps each artifact type in its own top-level directory so the repo can gro
 
 | Command | Description |
 |---|---|
-| [`/shipit`](./claude-commands/shipit.md) | Finalize the current branch with an OpenSpec-aware release flow: block on unfinished `tasks.md` items unless the user opts to continue, otherwise sync and archive completed OpenSpec changes before commit, PR, checks, and merge confirmation. |
+| [`/shipit`](./claude-commands/shipit.md) | Finalize the current branch with a session-aware OpenSpec release flow: check only the OpenSpec change worked on in the conversation, warn on unfinished `tasks.md` items, and offer to archive a completed change before commit, PR, checks, and merge confirmation. |
 
 ---
 
