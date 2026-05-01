@@ -373,7 +373,7 @@ install_remote_file() {
 
   mkdir -p "$(dirname "${destination_path}")"
 
-  temp_file="$(mktemp "${TMPDIR:-/tmp}/agentic-artifact.XXXXXX")"
+  temp_file="$(mktemp "${TMPDIR:-/tmp}/artifact.XXXXXX")"
   track_temp_file "${temp_file}"
 
   if ! download_file "${url}" "${temp_file}"; then
