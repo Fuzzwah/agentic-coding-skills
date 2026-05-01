@@ -67,14 +67,16 @@ prompt() {
 
 add_unique() {
   local item="$1"
-  local -n target_array="$2"
+  local array_name="$2"
   local existing
+  local -a existing_items
+  eval "existing_items=(\"\${${array_name}[@]:-}\")"
 
-  for existing in "${target_array[@]:-}"; do
+  for existing in "${existing_items[@]:-}"; do
     [[ "${existing}" == "${item}" ]] && return
   done
 
-  target_array+=("${item}")
+  eval "${array_name}+=(\"\${item}\")"
 }
 
 array_contains() {
@@ -185,28 +187,29 @@ parse_named_selection() {
   local input="$1"
   local source_array_name="$2"
   local output_array_name="$3"
-  local normalized token value found
-  local -n source_array="${source_array_name}"
-  local -n output_array="${output_array_name}"
+  local normalized token value found source_len
+  local -a source_items
 
-  output_array=()
+  eval "${output_array_name}=()"
+  eval "source_items=(\"\${${source_array_name}[@]}\")"
   normalized="$(printf '%s' "${input}" | tr '[:upper:]' '[:lower:]' | tr ',' ' ')"
 
   for token in ${normalized}; do
     if [[ "${token}" == "all" ]]; then
-      output_array=("${source_array[@]}")
+      eval "${output_array_name}=(\"\${${source_array_name}[@]}\")"
       return 0
     fi
 
     found=0
+    source_len="${#source_items[@]}"
 
-    if [[ "${token}" =~ ^[0-9]+$ ]] && (( token >= 1 && token <= ${#source_array[@]} )); then
-      add_unique "${source_array[$((token - 1))]}" output_array
+    if [[ "${token}" =~ ^[0-9]+$ ]] && (( token >= 1 && token <= source_len )); then
+      add_unique "${source_items[$((token - 1))]}" "${output_array_name}"
       found=1
     else
-      for value in "${source_array[@]}"; do
+      for value in "${source_items[@]}"; do
         if [[ "${token}" == "${value}" ]]; then
-          add_unique "${value}" output_array
+          add_unique "${value}" "${output_array_name}"
           found=1
           break
         fi
@@ -216,7 +219,7 @@ parse_named_selection() {
     (( found )) || return 1
   done
 
-  [[ ${#output_array[@]} -gt 0 ]]
+  eval "[[ \${#${output_array_name}[@]} -gt 0 ]]"
 }
 
 choose_artifact_types() {
@@ -318,11 +321,14 @@ choose_named_items() {
   local response
   local index
   local item
-  local -n source_array="${source_array_name}"
-  local -n selected_array="${selected_array_name}"
+  local source_len
+  local -a source_items
 
-  if [[ ${#source_array[@]} -eq 0 ]]; then
-    selected_array=()
+  eval "source_items=(\"\${${source_array_name}[@]:-}\")"
+  source_len="${#source_items[@]}"
+
+  if [[ "${source_len}" -eq 0 ]]; then
+    eval "${selected_array_name}=()"
     [[ -n "${empty_message}" ]] && log_tty "${empty_message}"
     return 0
   fi
@@ -332,7 +338,7 @@ choose_named_items() {
     log_tty "${heading}"
 
     index=1
-    for item in "${source_array[@]}"; do
+    for item in "${source_items[@]}"; do
       log_tty "  ${index}) ${item}"
       index=$((index + 1))
     done
@@ -340,7 +346,7 @@ choose_named_items() {
     response="$(prompt "${prompt_message}")"
 
     if [[ -z "${response}" ]]; then
-      selected_array=("${source_array[@]}")
+      eval "${selected_array_name}=(\"\${${source_array_name}[@]}\")"
       return 0
     fi
 
