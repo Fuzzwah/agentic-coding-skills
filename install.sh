@@ -129,8 +129,8 @@ detect_default_platforms() {
 artifact_type_label() {
   case "$1" in
     skills) printf 'Skills' ;;
-    claude-commands) printf 'Claude commands' ;;
-    pi-prompts) printf 'Pi prompts' ;;
+    claude-commands) printf 'Claude Commands' ;;
+    pi-prompts) printf 'Pi Prompts' ;;
     *) return 1 ;;
   esac
 }
