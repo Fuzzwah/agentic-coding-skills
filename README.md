@@ -1,4 +1,4 @@
-# agentic-coding-skills
+# Fuzzwah's Agentic Coding Skills, Commands, and Prompts
 
 A collection of reusable agent artifacts for use with agentic coding systems. The repository ships reusable `SKILL.md` files plus Claude command markdown files, with room for Pi prompt files alongside them.
 
