@@ -14,7 +14,7 @@ The skills in this repo are intentionally:
 - `skills/`: reusable skill folders, each containing a `SKILL.md`
 - `claude-commands/`: Claude command files
 - `pi-prompts/`: reserved for Pi prompt files
-- `install-skills.sh`: interactive installer for the skill library
+- `install.sh`: interactive installer for the artifact library
 
 This keeps each artifact type in its own top-level directory so the repo can grow beyond skills without mixing incompatible file conventions in the root.
 
@@ -56,22 +56,25 @@ This keeps each artifact type in its own top-level directory so the repo can gro
 Run this from the root of the target repository:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Fuzzwah/agentic-coding-skills/main/install-skills.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Fuzzwah/code-agent-skills-and-commands/main/install.sh | bash
 ```
 
 If you want to inspect the script first, download it, review it, then run it locally instead.
 
 The installer will:
-- detect existing `.claude`, `.github`, `.codex`, and `.opencode` markers in the current project
-- prompt you to confirm or change which platforms you want to install for
-- prompt you to install specific skills or **all**
+- prompt you to choose which artifact types to install
+- detect existing `.claude`, `.github`, `.codex`, and `.opencode` markers in the current project when you choose skills
+- prompt you to confirm or change which platforms you want to install skills for
+- prompt you to install specific artifacts or **all**
 - install the selected skills into the native project paths:
   - Claude Code: `.claude/skills/<skill>/SKILL.md`
   - OpenAI Codex: `.codex/skills/<skill>/SKILL.md`
   - GitHub Copilot: `.github/skills/<skill>/SKILL.md`
   - OpenCode: `.agents/skills/<skill>/SKILL.md`
+- install Claude commands into `.claude/commands/<command>.md`
+- install Pi prompts into `pi-prompts/<prompt-file>`
 
-Note: the installer currently installs skills only. Claude command files from `claude-commands/` should be copied manually into `.claude/commands/` (project-local) or `~/.claude/commands/` (personal).
+Note: the repository does not currently ship any Pi prompt files, so the installer will report that none are available yet if you choose that artifact type.
 
 ### Manual installation
 
