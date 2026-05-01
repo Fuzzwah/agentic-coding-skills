@@ -104,7 +104,7 @@ untrack_temp_file() {
     [[ "${current_file}" == "${file_to_remove}" ]] || remaining_files+=("${current_file}")
   done
 
-  TEMP_FILES=("${remaining_files[@]}")
+  TEMP_FILES=("${remaining_files[@]:-}")
 }
 
 cleanup_temp_files() {
