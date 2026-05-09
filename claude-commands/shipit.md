@@ -30,8 +30,16 @@ Use this command when the current branch is ready for finalization and you want 
    - commit the current changes
    - push the branch to the remote
    - create a pull request targeting the default branch
-   - monitor PR checks until they finish or until you hit a reasonable wait limit
-   - report the status of each check and call out any failures or blockers
+   - before monitoring CI, check PR mergeability: run `gh pr view <PR-URL> --json mergeable,mergeStateStatus`
+     - if `mergeable` is `"CONFLICTING"` or `mergeStateStatus` is `"DIRTY"`, stop and warn the user that merge conflicts are preventing CI checks from running; do **not** conclude that no CI checks are configured
+     - if conflicts exist, surface the conflict state clearly and ask the user how to proceed (e.g. rebase/resolve) before continuing
+   - immediately begin monitoring the PR's check runs:
+     - poll with `gh pr checks <PR-URL> --watch` and capture its output; this command blocks until all checks complete
+     - if `--watch` is unavailable or times out, fall back to polling every 30 seconds with `gh pr checks <PR-URL>` until all checks reach a terminal state (pass/fail/cancelled) or 15 minutes have elapsed
+     - if `gh pr checks` reports no checks, re-check mergeability before concluding CI is unconfigured — the absence of checks is often caused by unresolved conflicts, not a missing CI configuration
+     - keep the user informed as checks start, noting that monitoring is in progress
+   - once all checks are terminal, report a summary table: check name, status (✓ / ✗ / skipped), and duration
+   - call out any failures with the failing job name and a link to its logs via `gh run view <run-id> --log-failed`
 
 7. After reporting PR status, ask the user whether to merge into the default branch.
    - never merge without explicit approval
